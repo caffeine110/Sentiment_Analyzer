@@ -23,6 +23,7 @@ def clean_tweet(tweet):
     except:
         return 'this is neutral'
 
+
 #function to analyse the sentiment value of cleaned tweets
 def analize_sentiment(tweet):
 
@@ -39,6 +40,7 @@ def analize_sentiment(tweet):
 
     except:
         return 'neutral'
+
 
 #main funciton
 def main():
@@ -63,5 +65,6 @@ def main():
     
 
  
+
 if"__name__" == "__main__":
     main()
