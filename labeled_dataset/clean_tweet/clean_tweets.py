@@ -48,12 +48,16 @@ class PreProcessor(object):
         
     def clean_Tweets(self,df):
         try:
-            tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", df['tweet'].text).split())
-            tw = ''
-            for i in tweet_n:
-                tw = tw + ' ' + i 
-                print(tw)
-                
+            for row in df.itertuples(index=True, name='Pandas'):
+                tweet = getattr(row, "tweet")
+                tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ",tweet).split())
+
+                tw = ''
+                for i in tweet_n:
+                    tw = tw + ' ' + i 
+        
+                return tw
+            
         except:
             return 'this is neutral'
         
