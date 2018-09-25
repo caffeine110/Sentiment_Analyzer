@@ -8,8 +8,18 @@ Created on Thu Sep 13 18:36:36 2018
 """
 
 
+"""
+tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+tw = ''
+for i in tweet_n:
+tw = tw + ' ' + i 
+print(tw)
+
+analysis = TextBlob(tw)
+"""
 
 
+from textblob import TextBlob
 import pandas as pd
 import numpy as np
 import os
@@ -38,15 +48,21 @@ class PreProcessor(object):
         
     def clean_Tweets(self,df):
         try:
-            return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", df.tweet).split())
-        
+            tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", df['tweet'].text).split())
+            tw = ''
+            for i in tweet_n:
+                tw = tw + ' ' + i 
+                print(tw)
+                
         except:
             return 'this is neutral'
+        
+        return df
 
 
     def sentiment_To_Int(self,df):
         df['sentiment_value'].astype(str).astype(int)
-        
+
         
     def get_Details(self,df):
         print(df.count)
@@ -57,7 +73,7 @@ class PreProcessor(object):
 
 
     def to_new_CSV(self,df):
-        newFilePath = 'labeled_dataset/clean_tweet/cleaned_tweets.csv'
+        newFilePath = 'labeled_dataset/clean_tweet/clean_tweets.csv'
         df.to_csv(newFilePath, index= False)
         
         
