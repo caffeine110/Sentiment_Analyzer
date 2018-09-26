@@ -23,13 +23,16 @@ def clean_Tweet(tweet):
 
 
 def open_Tweet_File():
-    file_w = open('labeled_dataset/clean_tweet/sentiment_tweet.csv', 'w')
+    file_w = open('labeled_dataset/clean_tweet/clean_tweets.csv', 'w')
     writer = csv.DictWriter(file_w, delimiter=',', fieldnames=["sentiment_value","tweet"])
-    with open('sentiment_tweet.csv', newline='') as file:
+    with open('labeled_dataset/clean_tweet/sentiment_tweet.csv', newline='') as file:
         reader = csv.DictReader(file)
     
         for row in reader:
             sentiment_value = row['sentiment_value']
+            if sentiment_value == 4:
+                sentiment_value = 1
+                
             tweet = row['tweet']
             tweet = clean_Tweet(tweet)
             new_row = {'sentiment_value' :sentiment_value ,'tweet': tweet}
