@@ -8,100 +8,38 @@ Created on Thu Sep 13 18:36:36 2018
 """
 
 
-"""
-tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
-tw = ''
-for i in tweet_n:
-tw = tw + ' ' + i 
-print(tw)
 
-analysis = TextBlob(tw)
-"""
-
-
-from textblob import TextBlob
-import pandas as pd
-import numpy as np
-import os
+import csv
 import re
 
-field_names = ['sentiment_value', 'id', 'date_and_time', 'query', 'tweet']
+def clean_Tweet(tweet):
+    tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ",tweet).split())
 
-
-
-class PreProcessor(object):
-    def __init__ (self,df):
-        self.df = df
-
-
-    def remove_Duplicates(self,df):
-        df.drop_duplicates(inplace=True)
-
-    def change_Column_Names(self,df):
-        df.columns = ['sentiment_value','tweet']
-
-
-    def remove_NaN(self,df):        
-        df['sentiment_value'].fillna('Unknown', inplace=True)
-        df['tweet'].fillna('Unknown', inplace=True)
+    tw = ''
+    for i in tweet_n:
+        tw = tw + ' ' + i
         
-        
-    def clean_Tweets(self,df):
-        try:
-            for row in df.itertuples(index=True, name='Pandas'):
-                tweet = getattr(row, "tweet")
-                tweet_n = (re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ",tweet).split())
-
-                tw = ''
-                for i in tweet_n:
-                    tw = tw + ' ' + i 
-        
-                return tw
-            
-        except:
-            return 'this is neutral'
-        
-        return df
+    return tw
 
 
-    def sentiment_To_Int(self,df):
-        df['sentiment_value'].astype(str).astype(int)
+def open_Tweet_File():
+    file_w = open('labeled_dataset/clean_tweet/sentiment_tweet.csv', 'w')
+    writer = csv.DictWriter(file_w, delimiter=',', fieldnames=["sentiment_value","tweet"])
+    with open('sentiment_tweet.csv', newline='') as file:
+        reader = csv.DictReader(file)
+    
+        for row in reader:
+            sentiment_value = row['sentiment_value']
+            tweet = row['tweet']
+            tweet = clean_Tweet(tweet)
+            new_row = {'sentiment_value' :sentiment_value ,'tweet': tweet}
+            writer.writerow(new_row)
 
-        
-    def get_Details(self,df):
-        print(df.count)
-        print(df.info)
-        print(df.dtypes)
-        print(df.columns)
-
-
-
-    def to_new_CSV(self,df):
-        newFilePath = 'labeled_dataset/clean_tweet/clean_tweets.csv'
-        df.to_csv(newFilePath, index= False)
-        
-        
-        
 def main():
-
-    filepath = 'labeled_dataset/preprocessing/processed_data.csv'
-    df = pd.read_csv(filepath, usecols=['sentiment_value','tweet'])
-    print(df.count)
+    open_Tweet_File()
+    
 
 
-    #initialising object    
-    api = PreProcessor(df)
-
-    #calling functinos
-    api.remove_Duplicates(df)
-    api.change_Column_Names(df)
-    api.remove_NaN(df)
-    api.clean_Tweets(df)
-    api.sentiment_To_Int(df)
-    #api.get_Details(df)
-    api.to_new_CSV(df)
-
-
-if __name__ == "__main__":
-    #calling main function
+if __name__ == "__main__" :
+    #calling main function 
     main()
