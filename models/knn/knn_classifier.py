@@ -21,26 +21,22 @@ from sklearn.feature_selection import SelectPercentile, f_classif
 
 #### Part - 1 : read dataset
 #importing datasets
-dataset = pd.read_csv('labeled_dataset/clean_tweet/final.csv')
+dataset = pd.read_csv('labeled_dataset/clean_tweet/sentiment_tweet.csv')
 # trial
 
-X = dataset.iloc[:,1:1].values
-Y = dataset.iloc[:,0:1].values
+X = pd.Series(dataset.iloc[:,1])
 
-l = len(Y)
-
-for i in range(0,l):
-    if Y[i] == 4:
-        Y[i]=1
+X = dataset.iloc[:,1]
+Y = dataset.iloc[:,0]
 
 
 
 #### Part - 2  : test train split
 
 #spliting the data into the training and test datasets
-from sklearn import cross_validation
+from sklearn.model_selection import train_test_split
 
-X_train, X_test, Y_train, Y_test = cross_validation.train_test_split(X,Y,test_size = 0.25, random_state = 0)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size = 0.25, random_state = 0)
 
 
 ### Part - 3 : Vectorize
@@ -61,8 +57,8 @@ X_test = selector.transform(X_test).toarray()
 
 
 ### info on the data
-print("no. of Chris training emails: {} ".format(sum(Y_train)))
-print("no. of Sara training emails: {} ".format(len(Y_train)-sum(Y_train)))
+print("training tweets: {} ".format(sum(Y_train)))
+print(" training tweets: {} ".format(len(Y_train)-sum(Y_train)))
 
 
 
