@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Feb 10 17:13:06 2019
+
+@author: gaurav
+"""
+
+
+1) using BeautifulSoup for Souping
+2) url pattern http:
+3) url pattern www.
+4) neagtive handling
+5) lowercase
+6) removing numbers and special charectors
+7) tokenising rejoining
+
+    
+    
+some tweet contains only special msg/link/id/handler after cleaning it will become null
+
+so this tweets should be reomoved from the 
+
+
+
