@@ -62,7 +62,7 @@ def getDetails(df):
 # write file
 def writeFile(df):
     # filePath to write the sentiment_tweet file
-    filePath_w = 'phase_2_exctraction/sentiment_tweet.csv'
+    filePath_w = 'exctracted_sentiment_tweet.csv'
     cols = ['sentiment_value','tweet']
 
     # write into file
@@ -72,7 +72,7 @@ def writeFile(df):
 # main Method
 def main():
 
-    filePath_o = 'data/original_data.csv'
+    filePath_o = '../data/original_data.csv'
     df = pd.read_csv(filePath_o, encoding = 'cp1252')
     
     # removing the duplicates entries
@@ -92,8 +92,8 @@ def main():
     
     # function call to witer file
     writeFile(df)
-    print(df.head(5))
-    print(df.tail(5))
+    #print(df.head(5))
+    #print(df.tail(5))
 
     print("End of main...")
 

@@ -5,7 +5,7 @@ Created on Thu Sep 13 18:36:36 2018
 
 @author : gaurav gahukar
         : caffeine110
-    
+
 Aim     : To read downloaded file using proper encodeing
         : To remove NaN
         : To Exctract importent data
@@ -22,7 +22,7 @@ from nltk.tokenize import WordPunctTokenizer
 tok = WordPunctTokenizer()
 from bs4 import BeautifulSoup
 import pandas as pd
-import numpy as np
+#import numpy as np
 import re
 
 
@@ -42,10 +42,12 @@ def getDetails(df):
 def tweet_Cleaner(text):
     soup = BeautifulSoup(text, 'lxml')
     souped = soup.get_text()
+    
     try:
         bom_removed = souped.decode("utf-8-sig").replace(u"\ufffd", "?")
     except:
         bom_removed = souped
+    
     stripped = re.sub(combined_pat, '', bom_removed)
     stripped = re.sub(www_pat, '', stripped)
     lower_case = stripped.lower()
@@ -60,7 +62,7 @@ def tweet_Cleaner(text):
 
 ###############################################################################
 # read file and df
-filePath_o = 'phase_2_exctraction/sentiment_tweet.csv'
+filePath_o = '../phase_2_exctraction/exctracted_sentiment_tweet.csv'
 df = pd.read_csv(filePath_o, encoding = 'utf8')
 
 pat1 = r'@[A-Za-z0-9_]+'
@@ -114,6 +116,6 @@ clean_df.info()
 
 ###############################################################################
 # write df into file
-filePath_w = 'phase_3_cleaning/clean_sentiment_tweet.csv'
+filePath_w = 'cleaned_sentiment_tweet.csv'
 clean_df.to_csv(filePath_w, index = False)
 
