@@ -10,7 +10,7 @@ Created on Thu Sep 13 18:36:36 2018
 import pandas as pd
 
 
-filePath_r = 'data/original_data.csv'
+filePath_r = '../data/original_data.csv'
 
 cols = ['sentiment','id','date','query_string','user','text']
 
